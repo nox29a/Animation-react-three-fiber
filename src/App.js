@@ -4,19 +4,14 @@ import { Physics, RigidBody } from '@react-three/rapier'
 import { OrbitControls} from '@react-three/drei'
 const Colors = ['blue', 'pink', 'green', 'yellow', 'purple', 'red']
 export default function App() {
-  const balls = Array.from({ length: 25 }, () => ({
-    position: [
-      Math.floor(Math.random() * 10)-5,
-      Math.floor(Math.random() * 10)-5,
-      5
-    ]
-  }));
+  const balls = Array.from({ length: 25 })
   return (
     <Canvas style={{ background: "black", position: "absolute", top: 0, left: 0 }} camera={{ position: [0, 0, 150], fov: 30 }}>
       <pointLight position={[0, 0, 50]} intensity={1}/>
         <Physics>
+          <Frame />
           {balls.map((ball, index) => (
-            <Sphere key={index} position={[0,0,20-index]} />
+            <Sphere key={index} position={[Math.floor(Math.random()*2),Math.floor(Math.random()*2),20-index]} />
           ))}
           <Container />
           <Frame />
@@ -31,13 +26,14 @@ function Container() {
   const ref = useRef()
   return (
       <RigidBody ref={ref} type="fixed" colliders="trimesh" restitution={1}>
-        <mesh visible="false" rotation={[0, 0, 0]}>
+        <mesh visible="false">
           <sphereGeometry args={[30, 700, 700]} />
           <meshStandardMaterial color="black"  opacity={0.1} transparent  />
         </mesh>
       </RigidBody>
   )
 }
+
 function Frame() {
   const ref = useRef()
   return (
