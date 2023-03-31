@@ -7,11 +7,12 @@ export default function App() {
   const balls = Array.from({ length: 25 })
   return (
     <Canvas style={{ background: "black", position: "absolute", top: 0, left: 0 }} camera={{ position: [0, 0, 150], fov: 30 }}>
-      <pointLight position={[0, 0, 50]} intensity={1}/>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[0, 0, 100]} />
         <Physics>
           <Frame />
           {balls.map((ball, index) => (
-            <Sphere key={index} position={[Math.floor(Math.random()*2),Math.floor(Math.random()*2),20-index]} />
+            <Sphere key={index} position={[5-Math.floor(Math.random()*10),0,5-Math.floor(Math.random()*10)]} />
           ))}
           <Container />
           <Frame />
@@ -27,7 +28,7 @@ function Container() {
   return (
       <RigidBody ref={ref} type="fixed" colliders="trimesh" restitution={1}>
         <mesh visible="false">
-          <sphereGeometry args={[30, 700, 700]} />
+          <sphereGeometry args={[30, 100, 100]} />
           <meshStandardMaterial color="black"  opacity={0.1} transparent  />
         </mesh>
       </RigidBody>
@@ -37,16 +38,18 @@ function Container() {
 function Frame() {
   const ref = useRef()
   return (
+    <RigidBody ref={ref} type="fixed" colliders="trimesh" restitution={2}>
         <mesh visible="false" >
           <ringGeometry args={[30, 30.5, 100]} />
           <meshStandardMaterial color="white" />
         </mesh>
+    </RigidBody>
   )
 }
 
 const Sphere = (props) => (
   <RigidBody colliders="ball" restitution={1}>
-    <mesh {...props}>
+    <mesh  {...props}>
       <sphereGeometry args={[1, 100, 100]} />
       <meshStandardMaterial color={Colors[Math.floor(Math.random() * Colors.length)]} />
     </mesh>
