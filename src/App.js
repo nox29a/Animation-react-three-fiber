@@ -2,9 +2,9 @@ import { useRef} from 'react'
 import { Canvas} from '@react-three/fiber'
 import { Physics, RigidBody } from '@react-three/rapier'
 import { OrbitControls} from '@react-three/drei'
-const Colors = ['blue', 'pink', 'green', 'yellow', 'purple', 'red']
+const Colors = ['blue', 'pink', 'green', 'yellow', 'purple', 'red'] // kolory piłek
 export default function App() {
-  const balls = Array.from({ length: 25 })
+  const balls = Array.from({ length: 25 }) // ilość piłek
   return (
     <Canvas style={{ background: "black", position: "absolute", top: 0, left: 0 }} camera={{ position: [0, 0, 150], fov: 30 }}>
       <ambientLight intensity={0.5} />
@@ -23,7 +23,7 @@ export default function App() {
   )
 }
 
-function Container() {
+function Container() { // duża kula
   const ref = useRef()
   return (
       <RigidBody ref={ref} type="fixed" colliders="trimesh" restitution={1}>
@@ -35,7 +35,7 @@ function Container() {
   )
 }
 
-function Frame() {
+function Frame() { // ramka
   const ref = useRef()
   return (
     <RigidBody ref={ref} type="fixed" colliders="trimesh" restitution={2}>
@@ -47,7 +47,7 @@ function Frame() {
   )
 }
 
-const Sphere = (props) => (
+const Sphere = (props) => ( // małe kulki
   <RigidBody colliders="ball" restitution={1}>
     <mesh  {...props}>
       <sphereGeometry args={[1, 100, 100]} />
